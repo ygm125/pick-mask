@@ -1,0 +1,16 @@
+{
+  "name": "pick-mask",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index",
+  "scripts": {
+  },
+  "author": "yuguangming125@126.com",
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ygm125/pick-mask.git"
+  }
+}
