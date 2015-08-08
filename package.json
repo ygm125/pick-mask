@@ -1,13 +1,17 @@
 {
   "name": "pick-mask",
   "version": "0.0.1",
-  "description": "",
+  "description": "An object acquisition",
   "main": "lib/index",
   "scripts": {
+    "pro": "webpack -p ./lib/index.js ./build/pick-mask.min.js",
+    "dev": "webpack ./lib/index.js ./build/pick-mask.js",
+    "build" : "npm run dev & npm run pro"
   },
   "author": "yuguangming125@126.com",
   "license": "MIT",
   "devDependencies": {
+    "webpack": "^1.11.0"
   },
   "repository": {
     "type": "git",
