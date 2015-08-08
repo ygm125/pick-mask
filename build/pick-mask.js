@@ -243,13 +243,14 @@
 	    value = mask[key]
 	    ret = undefined
 	    typeFunc = ('object' === value.type) ? _object : _array
-	    if ('*' === key) {
-	      ret = _forAll(obj, value.properties, typeFunc)
+	    if ('*' === key || '#' === key[0]) {
+	      var _for = '*' === key ? _forAll : _forRegExp;
+	      ret = _for(obj, value.properties, typeFunc, key.slice(1))
 	      for (retKey in ret) {
 	        if (!util.has(ret, retKey)) continue
 	        maskedObj[retKey] = ret[retKey]
 	      }
-	    } else {
+	    }else {
 	      ret = typeFunc(obj, key, value.properties, value)
 	      if ('undefined' !== typeof ret) maskedObj[value.name] = ret
 	    }
@@ -261,6 +262,17 @@
 	  var ret = {}, key, value
 	  for (key in obj) {
 	    if (!util.has(obj, key)) continue
+	    value = fn(obj, key, mask)
+	    if ('undefined' !== typeof value) ret[key] = value
+	  }
+	  return ret
+	}
+
+	function _forRegExp(obj, mask, fn, reg) {
+	  var ret = {}, key, value,patt = new RegExp(reg)
+	  for (key in obj) {
+	    if (!util.has(obj, key)) continue
+	    if(!patt.test(key)) continue
 	    value = fn(obj, key, mask)
 	    if ('undefined' !== typeof value) ret[key] = value
 	  }
@@ -281,6 +293,9 @@
 
 	  i = parent && parent.begin || 0;
 	  l = parent && parent.end || arr.length;
+	  if(l < 0){
+	     l = arr.length + l;
+	  }
 
 	  for (; i < l; i++) {
 	    obj = arr[i]
