@@ -30,7 +30,7 @@ console.log(pickMask(obj,'a,c'));
 
 console.log(pickMask(obj,'c/a'));
 
-console.log(pickMask(obj,'c/(a,b)'));
+console.log(pickMask(obj,'c@cc/(a,b)'));
 
 console.log(pickMask(obj,'c/*'));
 
