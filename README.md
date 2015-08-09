@@ -1,4 +1,4 @@
-# Pick Mask
+# Pick Mask  [NPM version](https://www.npmjs.com/package/pick-mask)
 
 js对象提取器，扩展自 [json-mask](https://github.com/nemtsov/json-mask) 在此感谢！
 

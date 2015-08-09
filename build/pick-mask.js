@@ -61,27 +61,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var util = __webpack_require__(2)
-	  , TERMINALS = {',': 1, '/': 2, '(': 3, ')': 4}
+	  , TERMINALS = {',': 1, '.': 2, '(': 3, ')': 4}
 
 	module.exports = compile
-
-	/**
-	 *  Compiler
-	 *
-	 *  Grammar:
-	 *     Props ::= Prop | Prop "," Props
-	 *      Prop ::= Object | Array
-	 *    Object ::= NAME | NAME "/" Object
-	 *     Array ::= NAME "(" Props ")"
-	 *      NAME ::= ? all visible characters ?
-	 *
-	 *  Examples:
-	 *    a
-	 *    a,d,g
-	 *    a/b/c
-	 *    a(b)
-	 *    ob,a(k,z(f,g/d)),d
-	 */
 
 	function compile(text) {
 	  if (!text) return null
@@ -131,7 +113,7 @@
 	      token.properties = _buildTree(tokens, token, stack)
 	      // exit if in object stack
 	      peek = stack[stack.length-1]
-	      if (peek && ('/' == peek.tag)) {
+	      if (peek && ('.' == peek.tag)) {
 	        stack.pop()
 	        _addToken(token, props)
 	        return props
@@ -145,7 +127,7 @@
 	    } else if (')' === token.tag) {
 	      openTag = stack.pop(token)
 	      return props
-	    } else if ('/' === token.tag) {
+	    } else if ('.' === token.tag) {
 	      stack.push(token)
 	      continue
 	    }
@@ -243,9 +225,9 @@
 	    value = mask[key]
 	    ret = undefined
 	    typeFunc = ('object' === value.type) ? _object : _array
-	    if ('*' === key || '#' === key[0]) {
+	    if ('*' === key || '/' === key[0]) {
 	      var _for = '*' === key ? _forAll : _forRegExp;
-	      ret = _for(obj, value.properties, typeFunc, key.slice(1))
+	      ret = _for(obj, value.properties, typeFunc, key)
 	      for (retKey in ret) {
 	        if (!util.has(ret, retKey)) continue
 	        maskedObj[retKey] = ret[retKey]
@@ -269,7 +251,8 @@
 	}
 
 	function _forRegExp(obj, mask, fn, reg) {
-	  var ret = {}, key, value,patt = new RegExp(reg)
+	  reg = reg.split('/');
+	  var ret = {}, key, value,patt = new RegExp(reg[1],reg[2]);
 	  for (key in obj) {
 	    if (!util.has(obj, key)) continue
 	    if(!patt.test(key)) continue
@@ -293,9 +276,7 @@
 
 	  i = parent && parent.begin || 0;
 	  l = parent && parent.end || arr.length;
-	  if(l < 0){
-	     l = arr.length + l;
-	  }
+	  l < 0 && (l = arr.length + l);
 
 	  for (; i < l; i++) {
 	    obj = arr[i]
