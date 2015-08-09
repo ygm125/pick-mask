@@ -14,6 +14,9 @@ var obj = {
 		},
 		{
 			b : 6
+		},
+		{
+			c : 7
 		}	
 	],
 	ff : {
@@ -28,11 +31,11 @@ console.log(pickMask(obj,'a'));
 
 console.log(pickMask(obj,'a,c'));
 
-console.log(pickMask(obj,'c/a'));
+console.log(pickMask(obj,'c.a'));
 
-console.log(pickMask(obj,'c@cc/(a,b)'));
+console.log(pickMask(obj,'c@cc.(a,b)'));
 
-console.log(pickMask(obj,'c/*'));
+console.log(pickMask(obj,'c.*'));
 
 console.log(pickMask(obj,'#^\\w$'));
 
