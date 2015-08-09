@@ -37,7 +37,7 @@ console.log(pickMask(obj,'c@cc.(a,b)'));
 
 console.log(pickMask(obj,'c.*'));
 
-console.log(pickMask(obj,'#^\\w$'));
+console.log(pickMask(obj,'/^\\w{2}$/'));
 
 
 

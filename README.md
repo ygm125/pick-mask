@@ -17,16 +17,16 @@ npm install pick-mask
 
 - ` a@aa,b` rename fields
 - ` a|2-5` array interception
-- `	/\w+/` regular match
+- `	/\\w+/` regular match
 
 ## Example
 
 ```js
 var pick = require('pick-mask')
-pick({p: {a: 1, b: 2, aa: 11, bb: 22},z: 1}, 'p./^\w$/,z')  // {p: {a: 1, b : 2}, z: 1}
+pick({p: {a: 1, b: 2, aa: 11, bb: 22},z: 1}, 'p./^\\w$/,z')  // {p: {a: 1, b : 2}, z: 1}
 ```
 
-More examples test(/test)
+more examples [test](/test/index.js)
 
 License
 -------
